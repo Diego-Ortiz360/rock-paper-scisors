@@ -19,22 +19,28 @@ const getComputerChoice = () =>
                  break;
     }
 
-    console.log ("La computadora elige: " + choice);
+    return choice;
+    
 };
 
 
-const playRound = (playerSelection, computerSelection) => 
+const playRound = () => 
 {
+        let playerSelection = prompt (`Please choose "rock", "paper" or "scisors`)
 
-        playerMove = playerSelection.toLowerCase();
+        playerSelection.toLowerCase();
+
+        let computerSelection = getComputerChoice();
+
+        let winner = "";
 
         let rematch = false;
 
         let roundresult = null;
 
-        console.log (playerMove);
+        console.log (`The player choose: ${playerSelection} and the computer choose: ${computerSelection} `);
 
-        switch(playerMove)
+        switch(playerSelection)
         {
                 case "rock":
                 {
@@ -51,14 +57,24 @@ const playRound = (playerSelection, computerSelection) =>
                         {
                                 roundresult = "You Lose! Paper beats Rock";
 
+                                winner = "computer";
+
                                 break;
                         }
 
-                        else
+                        else if (computerSelection == "scisors")
                         {
                                 roundresult ="You win! Rock beats Scisors";
 
+                                winner = "player";
+
                                 break;
+                        }
+
+
+                        else 
+                        {
+                                roundresult = "Something went wrong";
                         }
 
                 }
@@ -78,14 +94,23 @@ const playRound = (playerSelection, computerSelection) =>
                         {
                                 roundresult = "You Lose! Scisors beats Paper";
 
+                                winner = "computer";
+
                                 break;
                         }
 
-                        else
+                        else if (computerSelection == "rock")
                         {
                                 roundresult ="You win! Paper beats Rock";
 
+                                winner = "player";
+
                                 break;
+                        }
+
+                        else 
+                        {
+                                roundresult = "Something went wrong";
                         }
 
                 }
@@ -104,15 +129,25 @@ const playRound = (playerSelection, computerSelection) =>
                         else if (computerSelection == "rock")
                         {
                                 roundresult = "You Lose! Rock beats Scisors";
+
+                                winner = "computer";
         
                                 break;
                         }
         
-                        else
+                        else if (computerSelection == "paper")
                         {
                                 roundresult ="You win! Scisors beats Paper";
+
+                                winner = "player";
         
                                 break;
+                        }
+
+
+                        else 
+                        {
+                                roundresult = "Something went wrong";
                         }
                 }
 
@@ -124,25 +159,69 @@ const playRound = (playerSelection, computerSelection) =>
                 }
         }
 
-        console.log (roundresult);
-
+        console.log (` The result of the round is: ${roundresult} ` );
+        
         if (rematch == true)
         {
                 rematch = false;
 
-                console.log (rematch);
-
                 rePlayRound();
+        }
+
+        else 
+        {
+                return winner;
         }
 }
 
 
 const rePlayRound = () =>
 {
-        playerValue = prompt("Please write 'Paper', 'Rock' or 'Scisors'");
-        computerValue = getComputerChoice();
+        let playerValue = prompt("Please write 'Paper', 'Rock' or 'Scisors'");
+        let computerValue = getComputerChoice();
         
-        playRound(playerValue,computerValue);
+        playRound(playerValue.toLowerCase(),computerValue);
+}
+
+
+const playGame = (rounds) =>
+{
+        let computerwins = 0;
+        let playerwins = 0;
+        let winnerofthegame;
+        let roundResult = 0;
+
+        for (let i = 0; i <= rounds-1; i++) 
+        {
+                roundResult = playRound();
+                
+                if (roundResult == "computer")
+                {
+                        computerwins++;
+                }
+
+                else
+                {
+                        playerwins ++;
+                }
+
+
+        }
+
+        if (computerwins > playerwins)
+        {
+                winnerofthegame = "computer";
+        }
+
+        else
+        {
+                winnerofthegame = "player";
+        }
+
+        console.log(`The results of the runds are:
+                The computer win: ${computerwins}
+                The player win: ${playerwins}
+                The winner of the game is: ${winnerofthegame}`);
 }
 
 
