@@ -184,7 +184,7 @@ const rePlayRound = () =>
 }
 
 
-const playGame = (rounds) =>cd
+const playGame = (rounds) =>
 {
         let computerwins = 0;
         let playerwins = 0;
