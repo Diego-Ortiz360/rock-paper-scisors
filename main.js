@@ -218,7 +218,7 @@ const playGame = (rounds) =>cd
                 winnerofthegame = "player";
         }
 
-        console.log(`The results of the runds are:
+        console.log(`The results of the rounds are:
                 The computer win: ${computerwins}
                 The player win: ${playerwins}
                 The winner of the game is: ${winnerofthegame}`);
