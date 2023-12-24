@@ -173,16 +173,8 @@ const btnRock = document.getElementById(`rock`);
 const btnPaper = document.getElementById(`paper`);
 const btnScisors = document.getElementById(`scisors`);
 
-console.log (btnRock);
-console.log(btnPaper);
-console.log(btnScisors);
-
-const imprimir = (imprimir) => 
-{
-        printResult.textContent = `Presionaste el boton de: ` + imprimir;
-}
-btnRock.addEventListener(`click`, imprimir(`piedra`));
-btnPaper.addEventListener(`click`, imprimir(`papel`));
-btnScisors.addEventListener(`click`, imprimir(`tijeras`));
+btnRock.addEventListener(`click`, () => { gameController(`rock`) });
+btnPaper.addEventListener(`click`, () => { gameController(`paper`)});
+btnScisors.addEventListener(`click`, () => { gameController(`scisors`)});
 
 
