@@ -1,3 +1,15 @@
+let winnerMatch;
+let matchCount;
+let winnerGame;
+let computerWins = 0;
+let playerWins = 0;
+
+const divResult = document.getElementById(`results`);
+
+const printResult = document.createElement(`p`);
+
+divResult.appendChild(printResult);
+
 const getComputerChoice = () => 
 {
     const value =  Math.trunc (Math.random()*3);
@@ -24,21 +36,11 @@ const getComputerChoice = () =>
 };
 
 
-const playRound = () => 
+const playRound = (playerSelection) => 
 {
-        let playerSelection = prompt (`Please choose "rock", "paper" or "scisors`)
-
-        playerSelection.toLowerCase();
-
         let computerSelection = getComputerChoice();
 
-        let winner = "";
-
-        let rematch = false;
-
-        let roundresult = null;
-
-        console.log (`The player choose: ${playerSelection} and the computer choose: ${computerSelection} `);
+        let winner = null;
 
         switch(playerSelection)
         {
@@ -46,35 +48,20 @@ const playRound = () =>
                 {
                         if (computerSelection == "rock")
                         {
-                                rematch = true;
-
-                                roundresult = "Its a TIE!, lets play a rematch";
-
+                                winner = "tie";
                                 break;
                         }
 
                         else if (computerSelection == "paper")
                         {
-                                roundresult = "You Lose! Paper beats Rock";
-
                                 winner = "computer";
-
                                 break;
                         }
 
                         else if (computerSelection == "scisors")
                         {
-                                roundresult ="You win! Rock beats Scisors";
-
-                                winner = "player";
-
+                                winner ="player";
                                 break;
-                        }
-
-
-                        else 
-                        {
-                                roundresult = "Something went wrong";
                         }
 
                 }
@@ -83,34 +70,20 @@ const playRound = () =>
                 {
                         if (computerSelection == "paper")
                         {
-                                rematch = true;
-
-                                roundresult = "Its a TIE!, lets play a rematch";
-
+                                winner = "tie";
                                 break;
                         }
 
                         else if (computerSelection == "scisors")
                         {
-                                roundresult = "You Lose! Scisors beats Paper";
-
                                 winner = "computer";
-
                                 break;
                         }
 
                         else if (computerSelection == "rock")
                         {
-                                roundresult ="You win! Paper beats Rock";
-
-                                winner = "player";
-
+                                winner ="player";
                                 break;
-                        }
-
-                        else 
-                        {
-                                roundresult = "Something went wrong";
                         }
 
                 }
@@ -119,110 +92,89 @@ const playRound = () =>
                 {
                         if (computerSelection == "scisors")
                         {
-                                rematch = true;
-        
-                                roundresult = "Its a TIE!, lets play a rematch";
-        
+                                winner = "tie";
                                 break;
                         }
         
                         else if (computerSelection == "rock")
                         {
-                                roundresult = "You Lose! Rock beats Scisors";
-
                                 winner = "computer";
-        
                                 break;
                         }
         
                         else if (computerSelection == "paper")
                         {
-                                roundresult ="You win! Scisors beats Paper";
-
-                                winner = "player";
-        
+                                winner ="player";
                                 break;
                         }
-
-
-                        else 
-                        {
-                                roundresult = "Something went wrong";
-                        }
-                }
-
-                 default: 
-                {
-                        roundresult = "Wrong entry, please enter 'rock', 'paper' or 'scisors' ";
-                        rematch = true;
-                        break;
                 }
         }
-
-        console.log (` The result of the round is: ${roundresult} ` );
         
-        if (rematch == true)
-        {
-                rematch = false;
-
-                rePlayRound();
-        }
-
-        else 
-        {
-                return winner;
-        }
+        return winner;
 }
 
 
-const rePlayRound = () =>
+
+const gameController = (playerSelection) =>
 {
-        let playerValue = prompt("Please write 'Paper', 'Rock' or 'Scisors'");
-        let computerValue = getComputerChoice();
-        
-        playRound(playerValue.toLowerCase(),computerValue);
-}
 
-
-const playGame = (rounds) =>
-{
-        let computerwins = 0;
-        let playerwins = 0;
-        let winnerofthegame;
-        let roundResult = 0;
-
-        for (let i = 0; i <= rounds-1; i++) 
+        if (computerWins <= 5 && playerWins <= 5)
         {
-                roundResult = playRound();
+                matchCount ++;
+
+                winnerMatch = playRound(playerSelection);
+
+                console.log (`${typeof(winnerMatch)} ${winnerMatch}`);
                 
-                if (roundResult == "computer")
+
+                if (winnerMatch == "player")
                 {
-                        computerwins++;
+                        playerWins ++;
+
+                        printResult.textContent = (`gana una ronda player`);
                 }
 
-                else
+                else if (winnerMatch == "computer")
                 {
-                        playerwins ++;
+                        computerWins ++;
+                        printResult.textContent = (`gana una ronda la skynet`);
                 }
 
+                else 
+                {
+                        printResult.textContent = (`Its a TIE, try again`);
+                }
 
-        }
-
-        if (computerwins > playerwins)
-        {
-                winnerofthegame = "computer";
+                
         }
 
         else
         {
-                winnerofthegame = "player";
+                if (computerWins > playerWins)
+                {
+                        printResult.textContent = (`Computer Win`);
+                }
+
+                else 
+                {
+                        printResult.textContent = (`YOU WIN CONGRATS YOU ARE OFFICIALY A NERD`);
+                }
+
+                computerWins = 0;
+
+                playerWins = 0;
         }
 
-        console.log(`The results of the rounds are:
-                The computer win: ${computerwins}
-                The player win: ${playerwins}
-                The winner of the game is: ${winnerofthegame}`);
+        
 }
 
+
+const btnRock = document.getElementById(`rock`);
+const btnPaper = document.getElementById(`paper`);
+const btnScisors = document.getElementById(`scisors`);
+
+btnRock.addEventListener(`click`, () => { gameController(`rock`) });
+btnPaper.addEventListener(`click`, () => { gameController(`paper`)});
+btnScisors.addEventListener(`click`, () => { gameController(`scisors`)});
 
 
